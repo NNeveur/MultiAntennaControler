@@ -27,8 +27,11 @@
  
  Software for Main Controler (Teensy) is not fully done.
  
- 
- 
+ Prototype
+ ![AntSwproto1](https://github.com/user-attachments/assets/e4569b35-5414-409a-beb9-1ca9d276e5d4)
+
+ ![AntSwproto2](https://github.com/user-attachments/assets/b6593467-0b5f-463d-9579-c6f4afa6e730)
+
 ![MainControl](https://github.com/user-attachments/assets/b221a1fb-7753-4c5d-a02f-8de5f6859774)
 ![SetupControl](https://github.com/user-attachments/assets/cce99413-3a82-4369-b0eb-89f44497b111)
-![MagLoop](https://github.com/user-attachments/assets/bb674210-b228-46e5-b636-fad7f2131e94)
+

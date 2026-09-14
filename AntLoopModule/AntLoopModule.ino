@@ -1,4 +1,11 @@
 
+void drv8825_PwrOn(void);
+void drv8825_PwrOff(void);
+void drv8825_Incr(uint8_t res);
+void drv8825_Decr(uint8_t res);
+void drv8825_Move(void);
+void drv8825_Init(void);
+
 const int drv8825_dir   = 3;     // Direction pin
 const int drv8825_step  = 4;     // Step pin (positive pulse of +1us for each step)
 const int drv8825_enable= 5;     // Enable pin
@@ -87,6 +94,13 @@ void drv8825_Init(void)
 String inputString = "";      // a String to hold incoming data
 bool stringComplete = false;  // whether the string is complete
 bool command = false;
+void commandOK() {
+  digitalWrite(2, HIGH);
+  delay(50);
+  Serial.println("$LPOK");
+  digitalWrite(2, LOW);
+}
+
 void setup() {
   // initialize serial:
   Serial.begin(9600);
@@ -106,23 +120,32 @@ void loop() {
 uint8_t res = 3;
   // print the string when a newline arrives:
   if (stringComplete) {
-//Serial.println(inputString);
+    inputString.trim();
 
-    if (inputString == "$STINC") {
+    if (inputString == "$LPINC" || inputString == "$STINC") {
       drv8825_Incr(res);
-  }
- else  if (inputString == "$STDEC") {
+      commandOK();
+    }
+    else if (inputString == "$LPDEC" || inputString == "$STDEC") {
       drv8825_Decr(res);
-  }
- else  if (inputString == "$STMOVE\n") {
+      commandOK();
+    }
+    else if (inputString == "$LPMOV" || inputString == "$STMOVE") {
       drv8825_Move();
-}  
- else  if (inputString == "$STON\n") {
+      commandOK();
+    }
+    else if (inputString == "$LPON" || inputString == "$STON") {
       drv8825_PwrOn();
-}  
- else  if (inputString == "$STOFF\n") {
+      commandOK();
+    }
+    else if (inputString == "$LPOFF" || inputString == "$STOFF") {
       drv8825_PwrOff();
-}  
+      commandOK();
+    }
+    else if (inputString == "$LPINI") {
+      drv8825_Init();
+      commandOK();
+    }
     // clear the string:
     inputString = "";
     command = false;

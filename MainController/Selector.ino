@@ -154,7 +154,7 @@ void dispCtrlSelector() {
       } else {
         myNex.writeStr("bc1.txt", ATASTag);
       }
-    } 
+    }
     myNex.writeStr("vis 11,1");
     } else {
     myNex.writeNum("bt1.h", 81);
@@ -182,8 +182,8 @@ void dispCtrlSelector() {
         myNex.writeStr("bc2.txt", VLTag);
       } else {
         myNex.writeStr("bc2.txt", ATASTag);
-      } 
-    } 
+      }
+    }
     myNex.writeStr("vis 12,1");
     } else {
       myNex.writeNum("bt2.h", 81);
@@ -211,8 +211,8 @@ void dispCtrlSelector() {
         myNex.writeStr("bc3.txt", VLTag);
       } else {
         myNex.writeStr("bc3.txt", ATASTag);
-      } 
-    }  
+      }
+    }
     myNex.writeStr("vis 13,1");
     } else {
       myNex.writeNum("bt3.h", 81);
@@ -240,8 +240,8 @@ void dispCtrlSelector() {
         myNex.writeStr("bc4.txt", VLTag);
       } else {
         myNex.writeStr("bc4.txt", ATASTag);
-      } 
-    } 
+      }
+    }
     myNex.writeStr("vis 14,1");
     } else {
       myNex.writeNum("bt4.h", 81);
@@ -269,8 +269,8 @@ void dispCtrlSelector() {
         myNex.writeStr("bc5.txt", VLTag);
       } else {
         myNex.writeStr("bc5.txt", ATASTag);
-      } 
-    } 
+      }
+    }
     myNex.writeStr("vis 15,1");
     } else {
       myNex.writeNum("bt5.h", 81);
@@ -298,8 +298,8 @@ void dispCtrlSelector() {
         myNex.writeStr("bc6.txt", VLTag);
       } else {
         myNex.writeStr("bc6.txt", ATASTag);
-      }  
-    } 
+      }
+    }
     myNex.writeStr("vis 16,1");
     } else {
       myNex.writeNum("bt6.h", 81);
@@ -327,8 +327,8 @@ void dispCtrlSelector() {
         myNex.writeStr("bc7.txt", VLTag);
       } else {
         myNex.writeStr("bc7.txt", ATASTag);
-      } 
-    } 
+      }
+    }
     myNex.writeStr("vis 17,1");
     } else {
       myNex.writeNum("bt7.h", 81);
@@ -356,8 +356,8 @@ void dispCtrlSelector() {
         myNex.writeStr("bc8.txt", VLTag);
       } else {
         myNex.writeStr("bc8.txt", ATASTag);
-      } 
-    } 
+      }
+    }
     myNex.writeStr("vis 18,1");
     } else {
       myNex.writeNum("bt8.h", 81);

@@ -55,12 +55,34 @@ double aggKp = 4, aggKi = 0.2, aggKd = 1;          // Aggressive for start
 double input1 = 0, output1 = 0, setpoint1 = 0;
 double input2 = 0, output2 = 0, setpoint2 = 0;
 
-Encoder myEnc1(2, 6);
-Encoder myEnc2(7, 11);
+Encoder myEnc1(2, 4);
+Encoder myEnc2(3, 7);
 
 PID myPID1(&input1, &output1, &setpoint1, consKp, consKi, consKd, P_ON_E, DIRECT);  
 PID myPID2(&input2, &output2, &setpoint2, consKp, consKi, consKd, P_ON_E, DIRECT);  
 
+// Function prototypes
+void loadEEPROM();
+void saveEEPROM();
+void commandOK();
+void vlgetp();
+void vlpos();
+void vlstop();
+void vlexpp(long pulse);
+void vlretp(long pulse);
+void vlmovep(long position);
+void parse_incoming();
+void serialEvent();
+void moveMotor1(int direction, int PWM_val1, long position);
+void moveMotor2(int direction, int PWM_val2, long position);
+void updateEncoder1();
+void updateEncoder2();
+void motorForward1(int PWM_val1);
+void motorForward2(int PWM_val2);
+void motorBackward1(int PWM_val1);
+void motorBackward2(int PWM_val2);
+void motorBrake1();
+void motorBrake2();
 
 void setup() {
   // initialize serial:
@@ -169,7 +191,7 @@ if (MotorN == 2)
   commandOK();
 }  
 
-void vlexpp(int8_t pulse) {
+void vlexpp(long pulse) {
   long position1;
   long position2;
   position1 = lastPosition1 + pulse;
@@ -181,7 +203,7 @@ if (MotorN == 2) {
   commandOK();
 }  
 
-void vlretp(int8_t pulse) {
+void vlretp(long pulse) {
   long position1;
   long position2;
   position1 = lastPosition1 - pulse;
@@ -403,12 +425,12 @@ void updateEncoder1(){
 
   if (gap1 < GapV)
   {  //we're close to setpoint, use conservative tuning parameters
-    myPID2.SetTunings(consKp, consKi, consKd);
+    myPID1.SetTunings(consKp, consKi, consKd);
   }
   else
   {
      //we're far from setpoint, use aggressive tuning parameters
-     myPID2.SetTunings(aggKp, aggKi, aggKd);
+     myPID1.SetTunings(aggKp, aggKi, aggKd);
   }
     myPID1.Compute();
     PWM_val1 = output1;

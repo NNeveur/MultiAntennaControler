@@ -127,9 +127,9 @@ void trigger9() // updating variables data from Setting page and write to EEPROM
   } else {
      if (ant1.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 
@@ -140,9 +140,9 @@ void trigger10() // updating variables data from Setting page and write to EEPRO
   } else {
      if (ant2.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 void trigger11() // updating variables data from Setting page and write to EEPROM
@@ -152,9 +152,9 @@ void trigger11() // updating variables data from Setting page and write to EEPRO
   } else {
      if (ant3.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 void trigger12() // updating variables data from Setting page and write to EEPROM
@@ -164,9 +164,9 @@ void trigger12() // updating variables data from Setting page and write to EEPRO
   } else {
      if (ant4.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 void trigger13() // updating variables data from Setting page and write to EEPROM
@@ -176,9 +176,9 @@ void trigger13() // updating variables data from Setting page and write to EEPRO
   } else {
      if (ant5.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 void trigger14() // updating variables data from Setting page and write to EEPROM
@@ -188,9 +188,9 @@ void trigger14() // updating variables data from Setting page and write to EEPRO
   } else {
      if (ant6.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 void trigger15() // updating variables data from Setting page and write to EEPROM
@@ -200,9 +200,9 @@ void trigger15() // updating variables data from Setting page and write to EEPRO
   } else {
      if (ant7.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 void trigger16() // updating variables data from Setting page and write to EEPROM
@@ -212,9 +212,9 @@ void trigger16() // updating variables data from Setting page and write to EEPRO
   } else {
      if (ant8.VLAnt == 1) {
       myNex.writeStr("page CtrlVL");
-    } else { 
+    } else {
     myNex.writeStr("page CtrlATAS");
-    }  
+    }
   }
 }
 
@@ -445,7 +445,7 @@ void trigger27() // setup applique updating variables data from Setting page and
   ant1.LoopAnt = myNex.readNumber("a1b12.val");
   ant1.VLAnt = myNex.readNumber("a1b13.val");
   ant1.ATASAnt = myNex.readNumber("a1b14.val");
-  
+
   ant2.active = myNex.readNumber("c2.val");
   strToWrite = myNex.readStr("t12.txt");
   strToWrite.toCharArray(ant2.etiquette, 20);
@@ -573,7 +573,7 @@ void trigger27() // setup applique updating variables data from Setting page and
   ant8.ATASAnt = myNex.readNumber("a8b14.val");
 
   saveEEPROM();
-  
+
   myNex.writeStr("page MenuSetup");
 //  dispPage1();
 }
@@ -631,7 +631,7 @@ void trigger33() // save VLSetup
   vl_param.motorspeed=myNex.readNumber("motorspeed.val");                  // Position Information, referenced at 1000000
   vl_param.maxlength=myNex.readNumber("maxlen.val");                  // Position Information, referenced at 1000000
 
-  saveEEPROM();    
+  saveEEPROM();
 
   myNex.writeStr("page MenuSetup");
 }
@@ -641,4 +641,3 @@ void trigger34() // save ATASSetup
 //  saveEEPROM();
   myNex.writeStr("page MenuSetup");
 }
-

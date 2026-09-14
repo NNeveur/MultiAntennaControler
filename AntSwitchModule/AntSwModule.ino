@@ -45,6 +45,8 @@ Serial.println("$SWREADY");
 digitalWrite(2, LOW);
 }
 
+void serialEvent();
+
 void commandOK() {
   digitalWrite(2, HIGH);
   delay(50);
@@ -73,17 +75,17 @@ void switchAllOn() {
      digitalWrite(thisPin, HIGH);
   }
   commandOK();
-}  
+}
 
 void switchOff(int8_t Relay) {
       digitalWrite(Relay+2, LOW);
   commandOK();
-}  
+}
 
 void switchOn(int8_t Relay) {
       digitalWrite(Relay+2, HIGH);
   commandOK();
-}  
+}
 
 
 
@@ -93,12 +95,12 @@ void parse_incoming(void)
   uint8_t x;
   char *pEnd;
   int8_t  AntRelay;
-  
+
   if (!strcasecmp("SWOFFALL",incoming_command_string))	           // Retrieve calibration values
   {
     switchAllOff();
   }
-  
+
   else   if (!strcasecmp("SWONALL",incoming_command_string))	           // Retrieve calibration values
   {
     switchAllOn();
@@ -106,13 +108,13 @@ void parse_incoming(void)
 
   else if (!strncasecmp("SWOFFANT",incoming_command_string,8))     // Write new calibration values
   {
-    AntRelay = strtol(incoming_command_string+8,&pEnd,9);
+    AntRelay = strtol(incoming_command_string+8,&pEnd,10);
     switchOff(AntRelay);
   }
 
   else if (!strncasecmp("SWONANT",incoming_command_string,7))     // Write new calibration values
   {
-    AntRelay = strtol(incoming_command_string+7,&pEnd,8);
+    AntRelay = strtol(incoming_command_string+7,&pEnd,10);
     switchOn(AntRelay);
   }
 }
@@ -142,7 +144,7 @@ void serialEvent() {
         waiting--;
       }
       //else ***********************ADD UART Receive here
-    }	
+    }
     // Input command is on its way.  One or more characters are waiting to be read
     // and Incoming flag has been set. Read any available bytes from the USB OUT endpoint
     while (waiting && Incoming)
@@ -169,8 +171,3 @@ void serialEvent() {
       a++;                                         // String length count++
     }
   }
-
-
-
-
-

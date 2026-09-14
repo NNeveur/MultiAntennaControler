@@ -1,11 +1,87 @@
-// AntSwitcher.h
-//#include "Nextriger.ino"
+#ifndef MAINCTRL_H
+#define MAINCTRL_H
+
+#include <Arduino.h>
+#include <EasyNextionLibrary.h>
+
+struct antenna
+{
+  unsigned active : 1;
+  char etiquette[20];
+  unsigned band1 : 1;
+  unsigned band2 : 1;
+  unsigned band3 : 1;
+  unsigned band4 : 1;
+  unsigned band5 : 1;
+  unsigned band6 : 1;
+  unsigned band7 : 1;
+  unsigned band8 : 1;
+  unsigned band9 : 1;
+  unsigned band10 : 1;
+  unsigned band11 : 1;
+  unsigned LoopAnt : 1;
+  unsigned VLAnt : 1;
+  unsigned ATASAnt : 1;
+};
+
+extern antenna ant1;
+extern antenna ant2;
+extern antenna ant3;
+extern antenna ant4;
+extern antenna ant5;
+extern antenna ant6;
+extern antenna ant7;
+extern antenna ant8;
+
+struct mode
+{
+  uint8_t freqsource;
+  uint8_t selector;
+};
+extern mode OpMode;
+
+struct radio
+{
+  uint8_t model;
+  uint16_t speed;
+  uint8_t port;             // 0 = TTL polarity, 1 = Reverse polarity Serial (if RS232 without MAX232)
+  uint8_t param;             // SERIAL_8N1
+  boolean passthrough;      // Pass all data from USB (computer) to serial (radio) and vice versa
+  uint16_t pollRate;
+  uint8_t  ICOM_address;    // ICOM CI-V Address, only relevant for ICOM transceivers
+  uint8_t  tx_pwrlevel;
+};
+extern radio RadioParam;
+
+struct var_track_t {
+  int32_t  Frq;                  // Frequency information in Hz
+  int32_t  Pos;                  // Position Information, referenced at 1000000
+};
+extern var_track_t var_track;
+
+struct vl_param_t {
+  int8_t  units;                  // Frequency information in Hz
+  int8_t  MotorN;                  // Frequency information in Hz
+  int8_t  encoderN;                  // Frequency information in Hz
+  int16_t pulseround;                  // Position Information, referenced at 1000000
+  int16_t unitsround;                  // Position Information, referenced at 1000000
+  int16_t motorspeed;                  // Position Information, referenced at 1000000
+  int32_t maxlength;                  // Position Information, referenced at 1000000
+};
+extern vl_param_t vl_param;
+
+extern uint8_t current_ant;
+extern uint8_t current_band;
+extern uint8_t ant_bank;
+
+extern EasyNex myNex;
+
 //
 // Ant Ctrl Module Commands
 #define SW_ALL_OFF  "$SWOFFALL"	// all relays switch off
 #define SW_ALL_ON 	"$SWONALL"	// all relays switch on
-#define SW_ANT_OFF	"$SWOFFA"	  // relay switch off + relay #
-#define SW_ANT_ON 	"$SWONA"	  // relay switch on + relay #
+#define SW_ANT_OFF	"$SWOFFANT"	  // relay switch off + relay #
+#define SW_ANT_ON 	"$SWONANT"	  // relay switch on + relay #
 #define SW_OK		    "$SWOK"		  // module command response
 //
 //
@@ -39,13 +115,13 @@
 // ATAS Ctrl Module Commands
 # define ATAS_UP  	"$ATASUP"	// antenna move up
 # define ATAS_DOWN 	"$ATASDW"	// antenna move down
-# define ATAS_STOP 	"$ATASST"	// full stop 
+# define ATAS_STOP 	"$ATASST"	// full stop
 # define ATAS_OK	  "$ATASOK"	// module command response
 //
 //
 //
 // Bool stuff
-#define WORKING    0 
+#define WORKING    0
 #define DONE       1
 #define SUCCESS    1
 #define FAIL       2
@@ -69,9 +145,9 @@
 #define UART_DISP Serial1
 #define Dispbaud 115200
 #define UART_RS422 Serial2
-uint16_t RSbaud = 19200;
+extern uint16_t RSbaud;
 #define UART_CAT Serial3
-uint16_t CATbaud = 9600;
+extern uint16_t CATbaud;
 
 #define LoopTag "Mag Loop Ctrl"
 #define VLTag "VariLength Ctrl"
@@ -82,11 +158,33 @@ uint16_t CATbaud = 9600;
 #define Encoder1 3
 #define EncoderSW 4
 
-uint8_t ModeCtrl = 0;   // 0=Main menu 1=Selector 2=LoopCtrl 3=VariCtrl 4=ATASCtrl
+extern uint8_t ModeCtrl;   // 0=Main menu 1=Selector 2=LoopCtrl 3=VariCtrl 4=ATASCtrl
 #define MainMenu 0
 #define Selector 1
 #define LoopCtrl 2
 #define VariCtrl 3
 #define ATASCtrl 4
 
+extern char print_buf[64];
+extern int32_t trx_pwr;
+extern int32_t trx_mode;
 
+void set_ant(int ant_relay);
+void ant(int Nrelay);
+void loadEEPROM();
+void saveEEPROM();
+void dispCtrlSelector();
+void rs422_parse_incoming();
+void rs422_read_and_parse();
+void vlFreqPos(float Freq);
+void vlFreqInch(float Freq);
+void ts2000_parse_serial_input();
+void ts2000_request_frequency();
+void ts2000_request_pwr();
+void ts2000_request_mode();
+void ts2000_set_pwr(uint8_t pwr);
+void ts2000_set_mode(uint8_t mode);
+void ts2000_set_tx();
+void ts2000_set_rx();
+
+#endif

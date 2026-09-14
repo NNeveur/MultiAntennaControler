@@ -20,7 +20,7 @@
 //**
 //** Platform........: Teensy 3.1 & 3.2 (http://www.pjrc.com)
 //**                   (It may be possible to adapt this code to other
-//**                    Arduino compatible platforms, however this will 
+//**                    Arduino compatible platforms, however this will
 //**                    require extensive rewriting of some portions of
 //**                    the code)
 //**
@@ -59,7 +59,7 @@ int8_t I2C_Init(void)
   if(Wire1.endTransmission() != 0)    // If error
   {
     ad7991_addr = AD7991_0;           // AD7991-0 was not detected
-    found = 1;                        // We may have an AD7991-0	
+    found = 1;                        // We may have an AD7991-0
   }
   Wire1.beginTransmission(ad7991_addr);
   if(Wire1.endTransmission() != 0)    // If error
@@ -77,8 +77,8 @@ int8_t I2C_Init(void)
     //TWI_WritePacket(ad7991_addr,10,&writePacket,0,&writePacket,1);
     Wire1.beginTransmission(ad7991_addr);
     Wire1.write(0x38);                 // Set ADCs 1 and 2 for consecutive reads and REF_SEL = external
-    Wire1.endTransmission();  
-  }  
+    Wire1.endTransmission();
+  }
   return found;
 }
 #endif
@@ -94,15 +94,15 @@ void adc_poll(void)
 {
   ADC::Sync_result result;
 
-  #if WIRE_ENABLED  
+  #if WIRE_ENABLED
   uint16_t adc_in[4];
   uint8_t  read_B[4];
   uint8_t  i=0;
-  
+
   //-----------------------------------------------------------------------------
   // use I2C connected AD7991 12-bit AD converter, if it was detected during init
   if (ad7991_addr)
-  {  
+  {
     Wire1.requestFrom(ad7991_addr, 4);
     while (Wire1.available()) read_B[i++] = Wire1.readByte();
 
@@ -132,7 +132,7 @@ void adc_poll(void)
     {
       fwd = -1;                                   // Should never happen
       ref = -1;
-    }	
+    }
   }
 }
 
@@ -172,9 +172,9 @@ void calculate_SWR(double v_fwd, double v_ref)
 
   // Assert SWR Alarm bit if SWR is above acceptable
   if (measured_swr > (controller_settings.swr_ok + 10)/10.0)
-    digitalWrite(swralarm_bit, HIGH);  // Assert SWR Alarm 
-  else 
-    digitalWrite(swralarm_bit, LOW);   // DeAssert SWR Alarm 
+    digitalWrite(swralarm_bit, HIGH);  // Assert SWR Alarm
+  else
+    digitalWrite(swralarm_bit, LOW);   // DeAssert SWR Alarm
 }
 
 
@@ -288,7 +288,7 @@ void measure_power_and_swr(void)
 
   adc_poll();
   pswr_determine_dBm(&ad8307_FdBm, &ad8307_RdBm);
-  
+
   // Instantaneous forward voltage and power, milliwatts and dBm
   f_inst = pow(10,ad8307_FdBm/20.0);		// (We use voltage later on, for SWR calc)
   fwd_power_mw = SQR(f_inst);			// P_mw = (V*V) (current and resistance have already been factored in
@@ -301,10 +301,10 @@ void measure_power_and_swr(void)
   power_mw = fwd_power_mw - ref_power_mw;
 
   if (!flag.stepper_active)            // We only do this if the Stepper is not in use
-  {                                    // If in use, then PSWR is measured at a different 
+  {                                    // If in use, then PSWR is measured at a different
     calculate_pep_and_pk();            // rate, hence this would make limited sense
   }
-  
+
   calculate_SWR(f_inst, r_inst);       // Calculate measured_swr based on forward and reflected voltages
 }
 
@@ -365,7 +365,7 @@ void measure_power_and_swr(void)
   uint16_t temp;
 
   adc_poll();                                   // Measure AD inputs
-  
+
   // Test for direction of power - Always designate the higher power as "forward"
   // while setting the "Reverse" flag on reverse condition.
   if (fwd > ref)                                // Forward direction
@@ -390,7 +390,7 @@ void measure_power_and_swr(void)
   v_fwd = v_fwd * BRIDGE_COUPLING * controller_settings.meter_cal/100.0;
   // Convert into milliwatts
   fwd_power_mw = 1000 * v_fwd*v_fwd/50.0;
-  	
+
   // Instantaneous reflected voltage and power
   //
   // Establish actual measured voltage at diode
@@ -401,16 +401,16 @@ void measure_power_and_swr(void)
   v_ref = v_ref * BRIDGE_COUPLING * controller_settings.meter_cal/100.0;
   // Convert into milliwatts
   ref_power_mw = 1000 * v_ref*v_ref/50.0;
-	
+
   // Instantaneous Real Power Output
   power_mw = fwd_power_mw - ref_power_mw;
   if (power_mw <  0) power_mw = power_mw * -1;
 
   if (!flag.stepper_active)            // We only do this if the Stepper is not in use
-  {                                    // If in use, then PSWR is measured at a different 
+  {                                    // If in use, then PSWR is measured at a different
     calculate_pep_and_pk(power_mw);    // rate, hence this would make limited sense
   }
-  
+
   calculate_SWR(v_fwd, v_ref);         // Calculate measured_swr based on forward and reflected voltages
 
   // Debug
@@ -432,7 +432,7 @@ void measure_power_and_swr(void)
       measured_swr = measured_swr/50;
       measured_swr = 1.2 + measured_swr*measured_swr;
     }
-    swr_bar = 1000.0 * log10(measured_swr);    
+    swr_bar = 1000.0 * log10(measured_swr);
   }
   #endif
 }

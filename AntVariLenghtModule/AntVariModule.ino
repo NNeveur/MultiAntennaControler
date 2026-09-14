@@ -70,6 +70,29 @@ ArduPID myPID2;
 //PID myPID1(&input1, &output1, &setpoint1, consKp, consKi, consKd, P_ON_E, DIRECT);  
 //PID myPID2(&input2, &output2, &setpoint2, consKp, consKi, consKd, P_ON_E, DIRECT);  
 
+// Function prototypes
+void loadEEPROM();
+void saveEEPROM();
+void commandOK();
+void vlgetp();
+void vlpos();
+void vlstop();
+void vlexpp(long pulse);
+void vlretp(long pulse);
+void vlmovep(long position);
+void parse_incoming();
+void serialEvent();
+void serial1Event();
+void moveMotor1(int direction, int PWM_val1, long position);
+void moveMotor2(int direction, int PWM_val2, long position);
+void updateEncoder1();
+void updateEncoder2();
+void motorForward1(int PWM_val1);
+void motorForward2(int PWM_val2);
+void motorBackward1(int PWM_val1);
+void motorBackward2(int PWM_val2);
+void motorBrake1();
+void motorBrake2();
 
 void setup() {
   // initialize serial:
